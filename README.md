@@ -21,11 +21,11 @@ app = FastAPI()
 ### Start server
 
 ```bash
-uvicorn main:app --reload
 # uvicorn <filename without .py>:<FastAPI instance name>
+uvicorn main:app --reload
 ```
 
-## CloudFlare Tunneling
+### CloudFlare Tunneling
 
 ### Install
 
