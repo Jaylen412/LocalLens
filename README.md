@@ -9,7 +9,6 @@ python3 -m pip install "fastapi[standard]" httpx
 ### Getting started
 
 ```bash
-
 #FastAPI import
 from fastapi import FastAPI
 
