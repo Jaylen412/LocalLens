@@ -45,6 +45,18 @@ uvicorn main:app --reload
     * sort_by: most_relevant is the default value
 ```
 
+### SerpAPI
+
+```
+* visit https://serpapi.com/
+* Create an account
+* Copy API key
+* Create .env file locally
+* create environment variable SERP_API_KEY and past key value
+```
+
+![Screenshot](/static/env-variables.png)
+
 ### CloudFlare Tunneling
 
 ### Install

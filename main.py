@@ -1,4 +1,3 @@
-# app.py
 from fastapi import FastAPI, HTTPException, Query
 import os, requests
 from typing import Any, Dict, List, Optional
