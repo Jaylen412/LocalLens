@@ -41,9 +41,9 @@ def normalize_reviews(raw: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     out = []
     for r in raw or []:
         out.append({
-            "username": r.get("username") or r.get("user") or r.get("author") or r.get("name"),
+            # "username": r.get("username") or r.get("user") or r.get("author") or r.get("name"),
             "rating": r.get("rating"),
-            "contributor_id": r.get("contributor_id") or r.get("user_id") or r.get("author_id"),
+            # "contributor_id": r.get("contributor_id") or r.get("user_id") or r.get("author_id"),
             "description": r.get("description") or r.get("snippet") or r.get("text"),
         })
     return out
