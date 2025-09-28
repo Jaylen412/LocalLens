@@ -151,7 +151,7 @@ if __name__ == "__main__":
     logger.info("To expose via Cloudflare Tunnel, run: cloudflared tunnel --url http://127.0.0.1:8000")
     
     uvicorn.run(
-        "app:app",
+        "main:app",
         host=host,
         port=port,
         reload=True,
