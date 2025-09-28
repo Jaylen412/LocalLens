@@ -39,7 +39,7 @@ def normalize_reviews(raw: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 @app.get("/reviews")
 def reviews(
-    q: str = Query("Fixins Soul Kitchen Detroit", description="Business name or query"),
+    q: str = Query(..., description="Business name"),
     limit: int = Query(10, ge=1, le=100, description="Max number of reviews to return"),
     sort_by: str = Query("most_relevant", pattern="^(most_relevant|newest)$", description="Sort reviews")
 ):

@@ -25,6 +25,26 @@ app = FastAPI()
 uvicorn main:app --reload
 ```
 
+### Swagger Docs
+
+```
+* On locally running server visit /docs
+```
+
+![Screenshot](/static/swagger-docs.png)
+
+### Qeury Params
+
+![Screenshot](/static/query-params.png)
+
+```
+* The reviews endpoint requires the following:
+    * q: The business name
+        - the more specific the better ex: Fixins Soul Kitchen Detroit
+    * limit: The amount of reviews to pull in
+    * sort_by: most_relevant is the default value
+```
+
 ### CloudFlare Tunneling
 
 ### Install
@@ -43,4 +63,6 @@ cloudflared tunnel --url http://localhost:8000 #port number here
 
 ### Shutdown Tunnel
 
-`CTRL + C`
+```
+CTRL + C
+```
