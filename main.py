@@ -3,9 +3,21 @@ from fastapi import FastAPI, HTTPException, Query
 import os, requests
 from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
+import uvicorn
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
-app = FastAPI(title="Reviews API")
+app = FastAPI(
+    title="Reviews API",
+    description="FastAPI application for fetching business reviews via SerpAPI",
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc"
+)
 
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 BASE_URL = "https://serpapi.com/search.json"
@@ -37,6 +49,25 @@ def normalize_reviews(raw: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         })
     return out
 
+@app.get("/")
+async def root():
+    """Health check endpoint"""
+    return {
+        "message": "Reviews API is running",
+        "status": "healthy",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+async def health_check():
+    """Detailed health check for monitoring"""
+    serp_configured = bool(SERP_API_KEY)
+    return {
+        "status": "healthy",
+        "serp_api_configured": serp_configured,
+        "version": "1.0.0"
+    }
+
 @app.get("/reviews")
 def reviews(
     q: str = Query(..., description="Business name"),
@@ -44,12 +75,16 @@ def reviews(
     sort_by: str = Query("most_relevant", pattern="^(most_relevant|newest)$", description="Sort reviews")
 ):
     """
+    Fetch business reviews from Google Maps via SerpAPI
+    
     Returns:
       - rating_summary: rating, reviews_total, type[], address
       - most_relevant: list[{username, rating, contributor_id, description}]
     """
     if not SERP_API_KEY:
         raise HTTPException(500, "SERP_API_KEY not found in .env or environment")
+
+    logger.info(f"Fetching reviews for: {q}")
 
     # 1) Look up the place
     data = http_get({
@@ -78,7 +113,7 @@ def reviews(
         place_id = place.get("place_id")  # sometimes present
 
         if not data_id and not place_id:
-            # As a fallback, try the first local result’s IDs if present
+            # As a fallback, try the first local result's IDs if present
             local_results = data.get("local_results") or []
             if local_results:
                 data_id = local_results[0].get("data_id") or data_id
@@ -100,8 +135,26 @@ def reviews(
             more_reviews = normalize_reviews(rev_payload.get("reviews") or [])
             collected = (collected + more_reviews)[:limit]
 
+    logger.info(f"Retrieved {len(collected)} reviews for: {q}")
+
     return {
         "query": q,
         "rating_summary": rating_summary,
         "most_relevant": collected,
     }
+
+if __name__ == "__main__":
+    # Configuration for running the server
+    host = os.getenv("HOST", "127.0.0.1")  # Use 127.0.0.1 for Cloudflare Tunnel
+    port = int(os.getenv("PORT", "8000"))
+    
+    logger.info(f"Starting FastAPI server on {host}:{port}")
+    logger.info("To expose via Cloudflare Tunnel, run: cloudflared tunnel --url http://127.0.0.1:8000")
+    
+    uvicorn.run(
+        "app:app",
+        host=host,
+        port=port,
+        reload=True,
+        log_level="info"
+    )
