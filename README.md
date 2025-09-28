@@ -31,7 +31,7 @@ uvicorn main:app --reload
 
 ![Screenshot](/static/swagger-docs.png)
 
-### Qeury Params
+### Query Params
 
 ![Screenshot](/static/query-params.png)
 
@@ -75,3 +75,5 @@ cloudflared tunnel --url http://127.0.0.1:8000
 ```
 CTRL + C
 ```
+
+### ChatGPT Integration
