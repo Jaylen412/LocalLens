@@ -52,17 +52,13 @@ def first(items: Optional[List[Dict[str, Any]]]) -> Dict[str, Any]:
 def normalize_review_item(r: Dict[str, Any]) -> Dict[str, Any]:
     """
     Normalize review fields we care about for consulting:
-    username, rating, contributor_id, description, date, link, images_count
+    rating, description, date
     """
-    images = r.get("images") or []
+
     return {
-        "username": r.get("username") or r.get("user") or r.get("author") or r.get("name"),
         "rating": r.get("rating"),
-        "contributor_id": r.get("contributor_id") or r.get("user_id") or r.get("author_id"),
         "description": r.get("description") or r.get("snippet") or r.get("text"),
-        "date": r.get("date"),
-        "link": r.get("link"),
-        "images_count": len(images),
+        "date": r.get("date")
     }
 
 def normalize_reviews(raw: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
@@ -105,8 +101,7 @@ def extract_competitors(pasf: Dict[str, Any]) -> List[Dict[str, Any]]:
             "gps_coordinates": block.get("gps_coordinates"),
             "type": block.get("type"),
             "data_id": block.get("data_id"),
-            "data_cid": block.get("data_cid"),
-            "thumbnail": block.get("thumbnail")
+            "data_cid": block.get("data_cid")
         })
     return out
 
@@ -162,8 +157,8 @@ def extract_place_core(place: Dict[str, Any]) -> Dict[str, Any]:
         "place_id_search": place.get("place_id_search"),
 
         # handy media / gallery
-        "thumbnail": place.get("thumbnail"),
-        "images": place.get("images"),
+        # "thumbnail": place.get("thumbnail"),
+        # "images": place.get("images"),
 
         # Q&A for preemptive FAQ
         "questions_and_answers": place.get("questions_and_answers")
