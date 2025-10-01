@@ -31,7 +31,7 @@ uvicorn main:app --reload
 
 ![Screenshot](/static/swagger-docs.png)
 
-### Qeury Params
+### Query Params
 
 ![Screenshot](/static/query-params.png)
 
@@ -74,4 +74,15 @@ cloudflared tunnel --url http://127.0.0.1:8000
 
 ```
 CTRL + C
+```
+
+### ChatGPT Integration
+
+```
+* Once application server is started & CloudFlare has been started take the URL provided
+* Open swagger docs(PROVIDED URL HERE/docs)
+* Click the link /openapi.json
+* Copy the schema and paste into the action section of ChatGPT
+* Create a privacy policy if you want others to be accessible to the GPT otherwise click update and test the GPT
+* You should see logs of the request on your VSCODE terminal
 ```
