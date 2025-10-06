@@ -85,6 +85,7 @@ CTRL + C
 * Open swagger docs(PROVIDED URL HERE/docs)
 * Click the link /openapi.json
 * Copy the schema and paste into the action section of ChatGPT
+* Add in the server section to the schema. This enables ChatGPT to contact the application.
 ```
 
 ![Screenshot](/static/OpenAPI-schema.png)
