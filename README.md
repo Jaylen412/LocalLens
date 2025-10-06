@@ -113,6 +113,6 @@ CTRL + C
 ![Screenshot](/static/swagger-logs.png)
 
 ```
-* You should see logs of the request on your VSCODE terminal & Swagger
+* You should see logs of the request on your VSCODE terminal. Swagger can be used to test endpoint.
 
 ```
