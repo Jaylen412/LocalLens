@@ -1,4 +1,4 @@
-# ForgeAI
+# ConsultantGPT
 
 ### Install
 
