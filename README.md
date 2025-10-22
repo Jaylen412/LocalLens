@@ -1,4 +1,4 @@
-# ConsultantGPT
+# LocalLens
 
 ### Install
 
