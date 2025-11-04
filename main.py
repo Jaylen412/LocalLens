@@ -21,7 +21,6 @@ app = FastAPI(
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 BASE_URL = "https://serpapi.com/search.json"
 
-
 # -----------------------------
 # Utilities
 # -----------------------------
