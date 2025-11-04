@@ -9,7 +9,12 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-load_dotenv()
+# Load environment variables from .env in development
+if os.path.exists('.env'):
+    load_dotenv()
+else:
+    logger.info("Running in production, using environment variables")
+
 app = FastAPI(
     title="Reviews API",
     description="FastAPI application for fetching business reviews via SerpAPI",
