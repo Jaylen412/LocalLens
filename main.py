@@ -18,8 +18,15 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-SERP_API_KEY = os.getenv("SERP_API_KEY")
 BASE_URL = "https://serpapi.com/search.json"
+
+def get_serp_api_key():
+    """Get SERP API key from environment"""
+    key = os.getenv("SERP_API_KEY")
+    if not key:
+        logger.error("SERP_API_KEY not found in environment variables")
+        raise HTTPException(500, "SERP_API_KEY not configured")
+    return key
 
 # -----------------------------
 # Utilities
@@ -216,8 +223,7 @@ def reviews(
       - competitors: simplified 'people also search for' set (optional)
       - popular_times: graph + live_hash (optional)
     """
-    if not SERP_API_KEY:
-        raise HTTPException(500, "SERP_API_KEY not found in .env or environment")
+    SERP_API_KEY = get_serp_api_key()
 
     logger.info(f"Fetching place & reviews for: {q}")
 
@@ -310,7 +316,7 @@ def reviews(
 
 if __name__ == "__main__":
     # Configuration for running the server
-    host = os.getenv("HOST", "127.0.0.1")  # Use 127.0.0.1 for Cloudflare Tunnel
+    host = os.getenv("HOST", "0.0.0.0")  # Use 127.0.0.1 for Cloudflare Tunnel
     port = int(os.getenv("PORT", "8000"))
 
     logger.info(f"Starting FastAPI server on {host}:{port}")
