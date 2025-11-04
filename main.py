@@ -21,7 +21,6 @@ app = FastAPI(
 SERP_API_KEY = os.getenv("SERP_API_KEY")
 BASE_URL = "https://serpapi.com/search.json"
 
-
 # -----------------------------
 # Utilities
 # -----------------------------
@@ -201,10 +200,10 @@ async def health_check():
 
 @app.get("/reviews")
 def reviews(
-    q: str = Query(..., description="Business name (be specific, e.g., 'Fixins Soul Kitchen Detroit')"),
+    q: str = Query(..., description="Business name (e.g., 'Fixins Soul Kitchen Detroit')"),
     limit: int = Query(10, ge=1, le=100, description="Max number of reviews to return"),
     sort_by: str = Query("most_relevant", pattern="^(most_relevant|newest)$", description="Sort reviews"),
-    include_competitors: bool = Query(True, description="Include 'people also search for' competitors"),
+    include_competitors: bool = Query(True, description="Include local competitors"),
     include_popular_times: bool = Query(True, description="Include Google popular times + live/dwell info"),
 ):
     """
