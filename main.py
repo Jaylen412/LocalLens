@@ -198,7 +198,7 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Detailed health check for monitoring"""
-    serp_configured = bool(SERP_API_KEY)
+    serp_configured = bool(os.getenv("SERP_API_KEY"))
     return {
         "status": "healthy",
         "serp_api_configured": serp_configured,
