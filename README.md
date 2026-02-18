@@ -1,4 +1,4 @@
-# LocalLens
+# Local Lens
 
 ### Install
 
